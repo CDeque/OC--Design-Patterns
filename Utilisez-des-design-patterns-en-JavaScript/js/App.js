@@ -1,16 +1,22 @@
 class App {
   constructor() {
     this.$moviesWrapper = document.querySelector(".movies-wrapper");
-    this.moviesApi = new MovieApi("./data/movie-data.json");
+    this.moviesApi = new MovieApi("./data/old-movie-data.json");
   }
 
   async main() {
-    const movies = await this.moviesApi.getMovies();
+    const moviesData = await this.moviesApi.getMovies();
 
-    movies.forEach((movie) => {
-      const Template = new MovieCard(movie);
-      this.$moviesWrapper.appendChild(Template.createMovieCard());
-    });
+    moviesData
+      .map((movie) => new OldMovie(movie))
+      .forEach((movie) => {
+        console.log("===");
+        console.log(movie);
+        console.log("===");
+
+        const Template = new MovieCard(movie);
+        this.$moviesWrapper.appendChild(Template.createMovieCard());
+      });
   }
 }
 
